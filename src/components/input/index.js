@@ -7,6 +7,10 @@ function Input(props) {
       type={props.type}
       id={props.type}
       name={props.type}
+      value={props.value}
+      onChange={(e) => {
+        props.change(e.target.value);
+      }}
     />
   );
 }

@@ -4,19 +4,26 @@ import Button from "../components/button/index";
 import { useState } from "react";
 
 function Login() {
-  // useState
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    console.log(email, password);
+  };
+
   return (
     <div className={classes.container}>
       <h1>Login</h1>
 
-      <form>
+      <form onSubmit={loginHandler}>
         <div className={classes.formGroup}>
-          <label for="email">Email:</label>
-          <Input type="email" />
+          <label htmlFor="email">Email:</label>
+          <Input type="email" value={email} change={setEmail} />
         </div>
         <div>
-          <label for="password">Password:</label>
-          <Input type="password" />
+          <label htmlFor="password">Password:</label>
+          <Input type="password" value={password} change={setPassword} />
         </div>
 
         <Button val="Login" />
