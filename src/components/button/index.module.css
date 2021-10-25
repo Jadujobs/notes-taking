@@ -1,0 +1,13 @@
+.btn {
+  margin-top: 40px;
+  background-color: transparent;
+  padding: 10px 20px;
+  border: 2px solid black;
+  font-size: 18px;
+  transition: all 0.2s linear;
+}
+
+.btn:hover {
+  background: black;
+  color: white;
+}
