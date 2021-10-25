@@ -1,0 +1,54 @@
+import classes from "./index.module.css";
+import Input from "../components/input/index";
+import Button from "../components/button/index";
+import { useState } from "react";
+
+function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+
+    if (password === confirmPassword) {
+      setPasswordMatch(true);
+      console.log(email, password);
+      return;
+    }
+
+    setPasswordMatch(false);
+    console.log("Password not matched!");
+  };
+
+  return (
+    <div className={classes.container}>
+      <h1>Signup</h1>
+
+      {passwordMatch === false && <p>Password didn't match</p>}
+      <form onSubmit={signupHandler}>
+        <div className={classes.formGroup}>
+          <label htmlFor="email">Email:</label>
+          <Input type="email" value={email} change={setEmail} />
+        </div>
+        <div className={classes.formGroup}>
+          <label htmlFor="password">Password:</label>
+          <Input type="password" value={password} change={setPassword} />
+        </div>
+        <div className={classes.formGroup}>
+          <label htmlFor="password">Confirm Password:</label>
+          <Input
+            type="password"
+            value={confirmPassword}
+            change={setConfirmPassword}
+          />
+        </div>
+
+        <Button val="Sign up" />
+      </form>
+    </div>
+  );
+}
+
+export default Signup;
