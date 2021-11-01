@@ -1,0 +1,30 @@
+.list {
+  padding: 0px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+.list_Item {
+  background-color: white;
+  padding: 10px 20px;
+  color: black;
+  list-style-type: none;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.list_Item_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list_Item_icons {
+  display: flex;
+}
+
+.list_Item_icons p {
+  margin-right: 20px;
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import classes from "./index.module.css";
 import Input from "../components/input/index";
 import Button from "../components/button/index";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Signup() {
@@ -58,6 +59,8 @@ function Signup() {
 
         <Button val="Sign up" />
       </form>
+
+      <Link to="/login">Already have an account!</Link>
     </div>
   );
 }

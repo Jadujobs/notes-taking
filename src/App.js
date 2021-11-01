@@ -1,8 +1,7 @@
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login/index";
 import Signup from "./Signup/index";
-import Home from "./Home/index";
 import NotFound from "./404/index";
 import Notes from "./Notes/index";
 function App() {
@@ -20,7 +19,7 @@ function App() {
           <Notes />
         </Route>
         <Route exact path="/">
-          <Home />
+          <Redirect to="/login" />
         </Route>
         <Route path="*">
           <NotFound />
