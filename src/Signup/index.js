@@ -7,26 +7,37 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const signupHandler = (e) => {
     e.preventDefault();
 
-    if (password === confirmPassword) {
-      setPasswordMatch(true);
-      console.log(email, password);
+    if (password !== confirmPassword) {
+      setErrorMessage("Password not matched!");
+      setTimeout(function () {
+        setErrorMessage("");
+      }, 3000);
       return;
     }
 
-    setPasswordMatch(false);
-    console.log("Password not matched!");
+    if (email === "") {
+      setErrorMessage("Invalid Email!");
+      setTimeout(function () {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
+
+    setErrorMessage("");
+
+    console.log(email, password);
   };
 
   return (
     <div className={classes.container}>
       <h1>Signup</h1>
 
-      {passwordMatch === false && <p>Password didn't match</p>}
+      <p>{errorMessage}</p>
       <form onSubmit={signupHandler}>
         <div className={classes.formGroup}>
           <label htmlFor="email">Email:</label>
