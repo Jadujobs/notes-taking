@@ -28,3 +28,19 @@
   margin-right: 20px;
   cursor: pointer;
 }
+
+.btn {
+  margin-top: 10px;
+  background-color: transparent;
+  padding: 10px 20px;
+  border: 2px solid white;
+  color: white;
+  font-size: 18px;
+  transition: all 0.2s linear;
+}
+
+.btn:hover {
+  background: black;
+  color: white;
+  border-color: black;
+}

@@ -1,5 +1,6 @@
-import styles from "./index.module.css";
+import classes from "./index.module.css";
 import Note from "./note";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 function Notes() {
   const [notes, setNotes] = useState([
@@ -39,9 +40,13 @@ function Notes() {
 
     setNotes(filteredNotes);
   }
+
   return (
     <div>
-      <ul className={styles.list}>
+      <Link to="/note">
+        <button className={classes.btn}>Add New Note</button>
+      </Link>
+      <ul className={classes.list}>
         {notes.map(function (note) {
           return (
             <Note

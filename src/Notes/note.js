@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import { Link } from "react-router-dom";
 function Note(props) {
   const { id, title, body, deleteFn } = props;
   return (
@@ -6,7 +7,9 @@ function Note(props) {
       <div className={styles.list_Item_top}>
         <h2>{title}</h2>
         <div className={styles.list_Item_icons}>
-          <p>🖊</p>
+          <Link to={`/note/${id}`}>
+            <p>🖊</p>
+          </Link>
           <p onClick={() => deleteFn(id)}>🗑</p>
         </div>
       </div>
