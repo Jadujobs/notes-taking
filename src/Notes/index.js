@@ -1,44 +1,42 @@
 import classes from "./index.module.css";
 import Note from "./note";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function Notes() {
-  const [notes, setNotes] = useState([
-    {
-      id: "1",
-      title: "CS101",
-      body: "try. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining ",
-    },
-    {
-      id: "2",
-      title: "CS102",
-      body: "try. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining ",
-    },
-    {
-      id: "3",
-      title: "CS103",
-      body: "try. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining ",
-    },
-    {
-      id: "4",
-      title: "CS103",
-      body: "try. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining ",
-    },
-    {
-      id: "5",
-      title: "CS103",
-      body: "try. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining ",
-    },
-  ]);
+  const [notes, setNotes] = useState([]);
 
-  function deleteNote(id) {
-    const tempNotes = [...notes];
+  useEffect(() => {
+    // IIFE
+    (async () => {
+      const res = await fetch("http://localhost:3009/notes", {
+        method: "GET",
+      });
+      const response = await res.json();
 
-    const filteredNotes = tempNotes.filter((tempNote) => {
-      return tempNote.id !== id;
-    });
+      setNotes(response);
+      console.log(response);
+    })();
+  }, []);
 
-    setNotes(filteredNotes);
+  async function deleteNote(id) {
+    try {
+      const res = await fetch("http://localhost:3009/notes/" + id, {
+        method: "DELETE",
+      });
+      const response = await res.json();
+      console.log(response);
+
+      const tempNotes = [...notes];
+
+      const filteredNotes = tempNotes.filter((tempNote) => {
+        return tempNote._id !== id;
+      });
+
+      setNotes(filteredNotes);
+    } catch (error) {
+      console.log("Something went unexpected!");
+      console.log(error);
+    }
   }
 
   return (
@@ -50,11 +48,11 @@ function Notes() {
         {notes.map(function (note) {
           return (
             <Note
-              key={note.id}
-              id={note.id}
+              key={note._id}
+              id={note._id}
               deleteFn={deleteNote}
               title={note.title}
-              body={note.body}
+              body={note.description}
             />
           );
         })}

@@ -1,18 +1,74 @@
 import classes from "./index.module.css";
 import Input from "../components/input/index";
 import Button from "../components/button/index";
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Note() {
-  const [title, setTile] = useState("");
+  const history = useHistory();
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const { id } = useParams();
 
-  const noteHandler = (e) => {
+  useEffect(() => {
+    // IIFE
+    if (id === undefined) return;
+
+    (async () => {
+      const res = await fetch("http://localhost:3009/notes/" + id, {
+        method: "GET",
+      });
+      const response = await res.json();
+
+      setTitle(response.title);
+      setDescription(response.description);
+      console.log(response);
+    })();
+  }, []);
+
+  const noteHandler = async (e) => {
     e.preventDefault();
-    console.log(title, description);
+
+    // Add a new note
+    if (id === undefined) {
+      try {
+        const res = await fetch("http://localhost:3009/notes", {
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            description,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        const response = await res.json();
+
+        console.log(response);
+        history.push("/notes");
+      } catch (error) {
+        console.log("Something went unexpected!");
+        console.log(error);
+      }
+    } else {
+      try {
+        const res = await fetch("http://localhost:3009/notes/" + id, {
+          method: "PUT",
+          body: JSON.stringify({ title, description }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        const response = await res.json();
+
+        console.log(response);
+        history.push("/notes");
+      } catch (error) {
+        console.log("Something went unexpected!");
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -26,7 +82,7 @@ function Note() {
             styling={classes.title}
             type="title"
             value={title}
-            change={setTile}
+            change={setTitle}
           />
         </div>
         <div>
